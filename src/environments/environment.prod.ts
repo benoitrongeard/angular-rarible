@@ -1,4 +1,5 @@
-import { defaultEnv, Env } from './env';
+import { Env } from '.';
+import { defaultEnv } from './env';
 
 export const environment: Env = {
   ...defaultEnv,
