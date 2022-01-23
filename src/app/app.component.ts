@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Moralis } from 'moralis';
+import chains from 'src/assets/data/chains';
 import { environment } from 'src/environments/environment';
 import { Web3Provider } from 'src/provider/web3.class';
+import { TokenUtils } from 'src/utils/tokens.utils';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +23,10 @@ export class AppComponent implements OnInit {
     Moralis.start({serverUrl: environment.moralis.serverUrl, appId: environment.moralis.appId})
     .then(async _ => { 
       console.debug('Moralis is initialized');
+      await this.login();
       await this.web3.init();
       this.initEvents();
-      // const chainId = Moralis.chainId;
-      // this.getNativeBalance(chainId);
+      this.getNativeBalance();
     })
     .catch((err) => {
       console.error('Moralis is not init ' + err);
@@ -33,54 +35,77 @@ export class AppComponent implements OnInit {
   }
 
   initEvents() {
-    // this.web3.getChainEvent((chain: string | null) => {
+    console.debug('INIT EVENTS');
+    /// Moralis Event not working correctly actually
+    // this.web3.getOnChainEvent((chain: string | null) => {
     //   console.log('Chain changed');
     //   console.log(chain);
-    //   this.getNativeBalance(chain);
+    //   this.getNativeBalance();
     // });
-    console.debug('INIT EVENTS');
-    this.onChainChanged = Moralis.onChainChanged(chain => {
-      console.log('Chain changed');
-      console.log(chain);
-      this.getNativeBalance(chain);
+
+    /// Metamask Event
+    (window as any).ethereum.on("chainChanged", (chain: any) => {
+      this.getNativeBalance();
     });
   }
 
-  async getNativeBalance(chain: string | null) {
-    console.log('get native balance');
-    console.log(chain);
+  async getNativeBalance() {
+    console.debug('GET NATIVE BALANCE');
+    const chainId: any = Moralis.chainId;
 
-    if (chain != null) {
-      // const toto = await Moralis.Web3API.account.getNativeBalance({
-      //   chain: chain,
-      //   address: this.web3.currentUser?.get('ethAddress'),
-      // });
+    if (chainId != null) {
 
-      // console.log('balance');
-      // console.log(toto);
-      const options: any = { chain: 'polygon', address: this.web3.currentUser?.get('ethAddress')};
-      const balances = await Moralis.Web3API.account.getTokenBalances(options);
-      console.debug("balances");
-      console.debug(balances);
-      // const resultBalance = balances.find( ({ token_address }) => token_address === contractAddress );
-      // const resultBalanceNumber = Moralis.Units.FromWei(resultBalance.balance)
-      // const balanceIntl = Intl.NumberFormat('en-US').format(resultBalanceNumber)
-      // console.log(balanceIntl)
+      console.log('chain id');
+      console.log(chainId);
+      const data: {balance: string} = await Moralis.Web3API.account.getNativeBalance({
+        chain: chainId,
+        address: this.web3.currentUser?.get('ethAddress'),
+      });
+
+      console.log('data balance');
+      console.log(Number(data.balance));
+
+      const chainNativeTokenInfo = chains.find((c) => {
+        return TokenUtils.decimalToHexString(c.chainId) === chainId;
+      });
+
+      console.log('chainNativeTokenInfo');
+      console.log(chainNativeTokenInfo);
+
+      const value = TokenUtils.tokenValue(Number(data.balance), Number(chainNativeTokenInfo?.nativeCurrency?.decimals));
+      console.debug("Value : ");
+      console.log(value);
     }
   }
 
-  async login() {
+  async getTokenBalances() {
+    const chainId: any = Moralis.chainId;
+
+    console.log('get native balance');
+    console.log(chainId);
+
+    const balances = await Moralis.Web3API.account.getTokenBalances({
+      chain: chainId,
+      address: this.web3.currentUser?.get('ethAddress'),
+    });
+
+    console.log('get native balance');
+    console.log(chainId);
+    console.log(balances);
+  }
+
+  async login(): Promise<Moralis.User | undefined> {
     let user = Moralis.User.current();
     if (!user) {
       await Moralis.authenticate({ signingMessage: "Log in using Moralis" })
-        .then(function (user: any) {
-          console.log("logged in user:", user);
-          console.log(user.get("ethAddress"));
+        .then((user: Moralis.User) => {
           user = user;
         })
         .catch(function (error: any) {
           console.log(error);
         });
     }
+
+    return user;
   }
 }

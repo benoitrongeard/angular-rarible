@@ -26,8 +26,7 @@ export class Web3Provider {
         });
     }
 
-    getChainEvent(callback: Moralis.Web3ChainChangedEventCallback) {
-        console.log('toto');
+    getOnChainEvent(callback: Moralis.Web3ChainChangedEventCallback) {
         return Moralis.onChainChanged(callback);
     }
 }
