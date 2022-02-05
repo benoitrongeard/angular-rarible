@@ -9,4 +9,12 @@ export class TokenUtils {
     static decimalToHexString(decimal: number) {
         return "0x" + decimal.toString(16);
     }
+
+    static decimalFormatter = new Intl.NumberFormat("en-us", {
+        style: "decimal",
+        minimumSignificantDigits: 1,
+        maximumSignificantDigits: 4,
+    });
+
+    static limitDecimals = (value: number) => TokenUtils.decimalFormatter.format(value);
 }

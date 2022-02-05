@@ -1,22 +1,33 @@
 import { Injectable } from '@angular/core';
 import Moralis from 'moralis';
+import { environment } from 'src/environments/environment';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class Web3Provider {
-    private web3Provider: Moralis.MoralisWeb3Provider;
     public currentUser: Moralis.User | undefined;
+    public notLoad = false;
+    public web3Provider: Moralis.MoralisWeb3Provider;
 
-    init(provider: Moralis.Web3ProviderType = 'metamask'): Promise<boolean> {
-        return this.web3Provider = Moralis.enableWeb3({provider: provider})
+
+    init(): Promise<boolean> {
+        return Moralis.start({serverUrl: environment.moralis.serverUrl, appId: environment.moralis.appId})
+        .then(async _ => { 
+          console.debug('Moralis is initialized');
+          return await this.initWeb3();
+        })
+        .catch((err) => {
+          console.error('Moralis is not init ' + err);
+          this.notLoad = true;
+          return false;
+        });
+    }
+
+    initWeb3(provider: Moralis.Web3ProviderType = 'metamask'): Promise<boolean> {
+        return Moralis.enableWeb3({provider: provider})
         .then((web3Provider: Moralis.MoralisWeb3Provider) => {
-            console.log('WEB 3 ENABLE');
-            console.log(web3Provider);
-            this.web3Provider = web3Provider;
-            console.debug('User : ');
+            console.debug('WEB 3 ENABLE');
             this.currentUser = Moralis.User.current();
-            console.log(this.currentUser);
+            this.web3Provider = web3Provider;
             return true;
         })
         .catch((err: any) => {

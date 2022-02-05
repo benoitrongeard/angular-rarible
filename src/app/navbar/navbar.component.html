@@ -1,0 +1,40 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled">Disabled</a>
+                </li>
+            </ul>
+            <div class="nav"> 
+                <div>
+                    <a class="navbar-brand p-0 mx-2 d-block" href="#">
+                        <img *ngIf="userNativeChainInfo" [src]="userNativeChainInfo | logoChain" width="30" height="30" class="d-inline-block" alt="">
+                        <span class="mx-2 d-inline-block align-middle">{{userNativeTokenValue}} {{userNativeChainInfo?.nativeCurrency?.symbol}}</span>
+                      </a>
+                </div>
+                <div *ngIf="userAddress; else connectWallet" class="d-flex justify-content-center align-items-center py-1 px-2 nav-current-amount">
+                    <span>{{userAddress | userWalletAddress}}</span>
+                </div>
+                <ng-template #connectWallet>
+                    <div>
+                        <button mat-flat-button color="primary" class="w-100" (click)="login()">Connect wallet</button>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</nav>
