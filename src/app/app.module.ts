@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared.module';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { Web3Provider } from 'src/provider/web3.class';
 import { UserWalletAddressPipe } from './pipes/user-wallet-address.pipe';
 import { LogoChainPipe } from './pipes/logo-chain.pipe';

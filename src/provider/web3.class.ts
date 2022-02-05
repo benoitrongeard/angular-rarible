@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 export class Web3Provider {
     public currentUser: Moralis.User | undefined;
     public notLoad = false;
-    public web3Provider: Moralis.MoralisWeb3Provider;
+    public web3Provider: Moralis.MoralisWeb3Provider | undefined;
 
 
     init(): Promise<boolean> {

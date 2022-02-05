@@ -17,4 +17,9 @@ export class TokenUtils {
     });
 
     static limitDecimals = (value: number) => TokenUtils.decimalFormatter.format(value);
+
+    static tokenValueFormatted = (value: number, decimals: number): string => {
+        const tokenValue = TokenUtils.tokenValue(value, decimals);
+        return tokenValue == null ? "0" : TokenUtils.limitDecimals(tokenValue);
+    }
 }

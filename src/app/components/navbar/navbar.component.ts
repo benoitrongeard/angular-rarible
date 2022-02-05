@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   public user: Moralis.User | undefined;
   public userAddress: string | undefined;
   public userNativeChainInfo: ChainData | undefined;
-  public userNativeTokenValue: number | null = null;
+  public userNativeTokenValue: string | null = null;
 
   constructor(private web3: Web3Provider, private cdRef: ChangeDetectorRef) { 
   }
@@ -78,9 +78,6 @@ export class NavbarComponent implements OnInit {
     console.debug('GET NATIVE BALANCE');
     const chainId: any = Moralis.chainId != null ? Moralis.chainId : chain;
 
-    console.log('chain id');
-    console.log(chainId);
-
     if (chainId != null) {
       const data: {balance: string} = await Moralis.Web3API.account.getNativeBalance({
         chain: chainId,
@@ -93,7 +90,7 @@ export class NavbarComponent implements OnInit {
 
       this.userNativeChainInfo = chain;
 
-      this.userNativeTokenValue = TokenUtils.tokenValue(Number(data.balance), Number(this.userNativeChainInfo?.nativeCurrency?.decimals));
+      this.userNativeTokenValue = TokenUtils.tokenValueFormatted(Number(data.balance), Number(this.userNativeChainInfo?.nativeCurrency?.decimals));
 
       this.cdRef.detectChanges();
     }

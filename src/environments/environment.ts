@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 import { Env } from '.';
-import { defaultEnv } from './env';
+import { defaultEnv } from './config';
 
 export const environment: Env = {
   ...defaultEnv
