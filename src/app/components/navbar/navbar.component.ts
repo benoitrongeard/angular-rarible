@@ -61,15 +61,7 @@ export class NavbarComponent implements OnInit {
 
   initEvents() {
     console.debug('INIT EVENTS');
-    /// Moralis Event not working correctly actually
-    // this.web3.getOnChainEvent((chain: string | null) => {
-    //   console.log('Chain changed');
-    //   console.log(chain);
-    //   this.getNativeBalance();
-    // });
-
-    /// Metamask Event
-    (window as any).ethereum.on("chainChanged", (chain: any) => {
+    this.web3.chainChangedObservable.subscribe(async (chain: any) => {
       this.getNativeBalance(chain);
     });
   }

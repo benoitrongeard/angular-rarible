@@ -9,18 +9,24 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Web3Provider } from 'src/provider/web3.class';
 import { UserWalletAddressPipe } from './pipes/user-wallet-address.pipe';
 import { LogoChainPipe } from './pipes/logo-chain.pipe';
+import { NftPipe } from './pipes/nft.pipe';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     UserWalletAddressPipe,
-    LogoChainPipe
+    LogoChainPipe,
+    NftPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
   ],
   providers: [
