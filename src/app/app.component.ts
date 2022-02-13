@@ -13,6 +13,7 @@ import { map, Observable, startWith } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'angular-rarible';
+  showCollection: boolean = false;
   userLoad: boolean = false;
   nftCollection?: NftCollectionClass;
   nftCollectionModels: NftCollectionModel[] = [];
@@ -30,8 +31,9 @@ export class AppComponent implements OnInit {
     this.initEvents();
   }
 
-  async getNft() {
-    console.log(this.selectedNftCollectionModel);
+  async getNft(nftCollectionName: string) {
+    this.selectedNftCollectionModel.setValue(nftCollectionName, {emitEvent: false});
+
     if (!this.nftCollectionModels) {
       console.log('No nft contract for this chain');
       return;
@@ -47,6 +49,8 @@ export class AppComponent implements OnInit {
     //TODO object type problem
     const options: any = { address: nftContractAddress, chain: 'eth', limit: 10 };
     this.nftCollection = <NftCollectionClass> await Moralis.Web3API.token.getAllTokenIds(options);
+    console.log('nft collection');
+    console.log(this.nftCollection);
     this.nftCollection.result?.map(r => r.metadata = null);
   }
 
@@ -75,6 +79,10 @@ export class AppComponent implements OnInit {
     const filterValue = value.toLowerCase();
 
     return this.nftCollectionModels?.filter(m => m.name.toLowerCase().includes(filterValue));
+  }
+
+  toggleCollection() {
+    this.showCollection = !this.showCollection;
   }
 
   // async getTokenBalances() {

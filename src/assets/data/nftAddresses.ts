@@ -2,6 +2,18 @@ export const nftCollections: any = {
     "0x1": [
       {
         image:
+          "https://lh3.googleusercontent.com/Elp_bWKH4be7BFwUbM84JhRgggPwP1XM1akHPJsTksP88BJoY9NWt2ECMZpY-rI3l9wrNUFdekGVC7-6i4vn4Al4f9iQt4JgZ6Mgxw=s0",
+        name: "Prime Ape Planet",
+        addrs: "0x6632a9d63E142F17a668064D41A21193b49B41a0",
+      },
+      {
+        image:
+          "https://lh3.googleusercontent.com/WOG6cvt7zNSOGg96Ig2CupQVk6gK9cLOlIJ70elJE9fbGRmGqAi1toiUVAHdchDTErQZtRW-JbjZGstYaQXWhyixxS4s7Nky0wlR=s0",
+        name: "Prime Kong Planet",
+        addrs: "0x5845E5F0571427D0ce33550587961262CA8CDF5C",
+      },
+      {
+        image:
           "https://lh3.googleusercontent.com/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGHoJBzDB=s130",
         name: "Bored Ape Yacht Club",
         addrs: "0xBC4CA0EdA7647A8aB7C2061c2E118A18a936f13D",

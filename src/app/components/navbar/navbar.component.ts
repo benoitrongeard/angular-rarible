@@ -11,6 +11,8 @@ import { TokenUtils } from 'src/utils/tokens.utils';
 })
 export class NavbarComponent implements OnInit {
 
+  public isMenuOpened = false;
+
   public user: Moralis.User | undefined;
   public userAddress: string | undefined;
   public userNativeChainInfo: ChainData | undefined;
@@ -86,5 +88,9 @@ export class NavbarComponent implements OnInit {
 
       this.cdRef.detectChanges();
     }
+  }
+
+  toggleMenu() {
+    this.isMenuOpened = !this.isMenuOpened;
   }
 }

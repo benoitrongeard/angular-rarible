@@ -9,8 +9,6 @@ import { NtfInterface } from '../models/nft.class';
 export class NftPipe implements PipeTransform {
 
   async transform(nft: NtfInterface): Promise<string> {
-    console.debug('FETCH NFT IMAGE');
-    console.debug(nft);
     if (nft.metadata) {
       const metadata = JSON.parse(nft.metadata);
       return NftUtils.resolveLink(metadata.image);
