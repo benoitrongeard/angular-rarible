@@ -16,7 +16,10 @@ export class NftCollectionClass {
      * @example 100
      */
     page_size?: number;
-    result: NtfInterface[] | undefined;
+    
+    /** The cursor returned in the last response (for getting the next page) */
+    cursor?: string;
+    result: NtfInterface[] = [];
 
     constructor(pros: JSON) {
         Object.assign(JSON.parse(JSON.stringify(pros)));

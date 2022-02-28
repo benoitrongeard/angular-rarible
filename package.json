@@ -21,6 +21,7 @@
     "@angular/router": "~13.1.0",
     "cryptocurrency-icons": "^0.18.0",
     "moralis": "^1.2.6",
+    "ngx-infinite-scroll": "^10.0.1",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

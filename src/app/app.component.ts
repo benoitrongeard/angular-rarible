@@ -21,7 +21,13 @@ export class AppComponent implements OnInit {
 
   selectedNftCollectionModel: FormControl = new FormControl();
 
+  nftBaseOffset: number = 50;
+  nftCurrentOffset: number = 0;
+  nftLimit: number;
+  cursor?: string;
+
   constructor(private web3Provider: Web3Provider) {
+    this.nftLimit = this.nftBaseOffset;
   }
 
   ngOnInit() {
@@ -31,9 +37,12 @@ export class AppComponent implements OnInit {
     this.initEvents();
   }
 
-  async getNft(nftCollectionName: string) {
+  refreshSelectedModel(nftCollectionName: string) {
     this.selectedNftCollectionModel.setValue(nftCollectionName, {emitEvent: false});
+    this.getNft();
+  }
 
+  async getNft() {
     if (!this.nftCollectionModels) {
       console.log('No nft contract for this chain');
       return;
@@ -47,11 +56,20 @@ export class AppComponent implements OnInit {
     }
 
     //TODO object type problem
-    const options: any = { address: nftContractAddress, chain: 'eth', limit: 10 };
-    this.nftCollection = <NftCollectionClass> await Moralis.Web3API.token.getAllTokenIds(options);
-    console.log('nft collection');
-    console.log(this.nftCollection);
-    this.nftCollection.result?.map(r => r.metadata = null);
+    const options: any = { address: nftContractAddress, chain: 'eth', offset: this.nftCurrentOffset, limit: this.nftLimit, cursor: this.cursor, order: 'asc' };
+    let data = <NftCollectionClass> await Moralis.Web3API.token.getAllTokenIds(options);
+    if (!this.nftCollection) {
+      this.nftCollection = data;
+    } else {
+      this.nftCollection.cursor = data.cursor;
+      this.nftCollection.page = data.page;
+      this.nftCollection.total = data.total;
+      this.nftCollection.page_size = data.page_size;
+      if (data.result) {
+        this.nftCollection.result?.push(...data.result);
+      }
+    }
+    this.cursor = this.nftCollection.cursor;
   }
 
   refreshNftModels() {
@@ -83,6 +101,15 @@ export class AppComponent implements OnInit {
 
   toggleCollection() {
     this.showCollection = !this.showCollection;
+  }
+
+  onScroll() {
+    console.log('scrolled');
+    this.nftCurrentOffset += this.nftBaseOffset;
+    this.nftLimit += this.nftBaseOffset;
+    console.log('nft current offset');
+    console.log(this.nftCurrentOffset);
+    this.getNft();
   }
 
   // async getTokenBalances() {
