@@ -11,6 +11,7 @@ import { UserWalletAddressPipe } from './pipes/user-wallet-address.pipe';
 import { LogoChainPipe } from './pipes/logo-chain.pipe';
 import { NftPipe } from './pipes/nft.pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    LazyLoadImageModule,
     SharedModule,
   ],
   providers: [

@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
   nftLimit: number;
   cursor?: string;
 
+  allDataLoaded: boolean = false;
+
   constructor(private web3Provider: Web3Provider) {
     this.nftLimit = this.nftBaseOffset;
   }
@@ -37,8 +39,15 @@ export class AppComponent implements OnInit {
     this.initEvents();
   }
 
+  resetNftCollection() {
+    this.allDataLoaded = false;
+    delete this.nftCollection;
+    delete this.cursor;
+  }
+
   refreshSelectedModel(nftCollectionName: string) {
     this.selectedNftCollectionModel.setValue(nftCollectionName, {emitEvent: false});
+    this.resetNftCollection();
     this.getNft();
   }
 
@@ -67,6 +76,8 @@ export class AppComponent implements OnInit {
       this.nftCollection.page_size = data.page_size;
       if (data.result) {
         this.nftCollection.result?.push(...data.result);
+      } else {
+        this.allDataLoaded = true;
       }
     }
     this.cursor = this.nftCollection.cursor;
@@ -79,7 +90,7 @@ export class AppComponent implements OnInit {
       if(a.name > b.name) { return 1; }
       return 0;
     });
-    delete this.nftCollection;
+    this.resetNftCollection();
   }
 
   initEvents() {
@@ -109,7 +120,9 @@ export class AppComponent implements OnInit {
     this.nftLimit += this.nftBaseOffset;
     console.log('nft current offset');
     console.log(this.nftCurrentOffset);
-    this.getNft();
+    if (!this.allDataLoaded) {
+      this.getNft();
+    }
   }
 
   // async getTokenBalances() {
