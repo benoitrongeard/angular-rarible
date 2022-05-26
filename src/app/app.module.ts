@@ -9,7 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { Web3Provider } from 'src/provider/web3.class';
 import { UserWalletAddressPipe } from './pipes/user-wallet-address.pipe';
 import { LogoChainPipe } from './pipes/logo-chain.pipe';
-import { NftPipe } from './pipes/nft.pipe';
+import { NftFetchAttributesPipe, NftFetchImagePipe } from './pipes/nft.pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
@@ -20,7 +20,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     NavbarComponent,
     UserWalletAddressPipe,
     LogoChainPipe,
-    NftPipe
+    NftFetchImagePipe,
+    NftFetchAttributesPipe,
   ],
   imports: [
     BrowserModule,

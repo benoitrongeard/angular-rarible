@@ -71,3 +71,9 @@ export interface NftCollectionModel {
     name: string;
     addrs: string;
 }
+
+/// Interface describe attributes in nft medata
+export interface NftAttributes {
+    trait_type: string;
+    value: string;
+}
