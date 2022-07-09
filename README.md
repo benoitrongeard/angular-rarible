@@ -2,6 +2,16 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.4.
 
+## Cloud functions
+
+`cp .env-template .env`
+
+Go to project racine, and run command for dev cloud function in local :
+`moralis-admin-cli watch-cloud-folder get-logs --autoSave 1 --moralisCloudfolder "/path/to/cloud_functions"`
+
+Show logs in real time from cloud functions :
+`moralis-admin-cli get-logs`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

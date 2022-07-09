@@ -8,7 +8,9 @@ import {
 import { getNftCollectionsByChain } from 'src/assets/data/nftAddresses';
 import { FormControl } from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -26,7 +28,6 @@ export class AppComponent implements OnInit {
   selectedNftCollectionModel: FormControl = new FormControl();
 
   nftBaseOffset: number = 50;
-  nftCurrentOffset: number = 0;
   nftLimit: number;
   cursor?: string;
 
@@ -37,7 +38,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.debug('STARTING APP');
     this.userLoad = this.web3Provider.currentUser != null;
     this.refreshNftModels();
     this.initEvents();
@@ -62,7 +62,6 @@ export class AppComponent implements OnInit {
       console.log('No nft contract for this chain');
       return;
     }
-    console.debug('GET NFT');
 
     let nftContractAddress: string | undefined = this.nftCollectionModels.find(
       (m) => m.name === this.selectedNftCollectionModel.value
@@ -72,7 +71,6 @@ export class AppComponent implements OnInit {
       return;
     }
 
-    //TODO object type problem
     const options: any = {
       address: nftContractAddress,
       chain: 'eth',
@@ -114,9 +112,11 @@ export class AppComponent implements OnInit {
   }
 
   initEvents() {
-    this.web3Provider.chainChangedObservable.subscribe(async (chain: any) => {
-      this.refreshNftModels();
-    });
+    this.web3Provider.chainChangedObservable
+      .pipe(untilDestroyed(this))
+      .subscribe(async (chain: any) => {
+        this.refreshNftModels();
+      });
 
     this.nftCollectionModelsFiltered =
       this.selectedNftCollectionModel.valueChanges.pipe(
@@ -139,13 +139,32 @@ export class AppComponent implements OnInit {
 
   onScroll() {
     console.log('scrolled');
-    this.nftCurrentOffset += this.nftBaseOffset;
     this.nftLimit += this.nftBaseOffset;
-    console.log('nft current offset');
-    console.log(this.nftCurrentOffset);
     if (!this.allDataLoaded) {
       this.getNft();
     }
+  }
+
+  //Setting admin role
+  async test() {
+    // const query = new Moralis.Query(Moralis.Role);
+    // const rolesList: Moralis.Role[] = await query.find({ useMasterKey: true });
+
+    // rolesList.forEach((role) => {
+    //   console.log(role);
+    //   console.log(role.getName()); // Work
+    //   console.log(role.getUsers()); // no users but in dashboard i can see my user
+    // });
+
+    console.log('begin');
+    const isAdmin = await Moralis.Cloud.run('isAdmin');
+    console.log('ratings', isAdmin);
+    // ratings should be 4.5
+
+    // const currentUser = Moralis.User.current();
+    // console.log('currentUser', currentUser);
+    // currentUser?.getACL();
+    // currentUser?.get('role');
   }
 
   // async getTokenBalances() {

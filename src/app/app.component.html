@@ -2,30 +2,92 @@
 
 <div class="container h-screen m-auto">
   <div class="flex justify-center align-middle">
-    <div class="flex align-middle mt-4 sm:w-8/12 lg:w-6/12 h-16 relative rounded-lg">
+    <div
+      class="flex align-middle mt-4 sm:w-8/12 lg:w-6/12 h-16 relative rounded-lg"
+    >
       <div class="block w-full z-10">
-        <input (click)="toggleCollection()" (blur)="toggleCollection()" type="text" [formControl]="selectedNftCollectionModel" placeholder="Nft Collection" id="price" class="shadow-sm outline-0 border-2 focus:border-indigo-600 block w-full h-3/4 pl-4 pr-12 sm:text-sm border-gray-500 rounded-full" autocomplete="off">
+        <input
+          (click)="toggleCollection()"
+          (blur)="toggleCollection()"
+          type="text"
+          [formControl]="selectedNftCollectionModel"
+          placeholder="Nft Collection"
+          id="price"
+          class="shadow-sm outline-0 border-2 focus:border-indigo-600 block w-full h-3/4 pl-4 pr-12 sm:text-sm border-gray-500 rounded-full"
+          autocomplete="off"
+        />
       </div>
-      <div *ngIf="showCollection" class="absolute w-full h-auto block  top-1/2 left-0 bg-gray-100">
-        <ul class="absolute z-10 mt-5 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm" tabindex="-1" role="listbox" aria-labelledby="listbox-label" aria-activedescendant="listbox-option-3">
-          <div *ngIf="nftCollectionModels && nftCollectionModels.length > 0; else noCollectionModel">
-            <li (mousedown)="refreshSelectedModel(nftCollection.name)" *ngFor="let nftCollection of nftCollectionModelsFiltered | async" [value]="nftCollection.name" class="group text-gray-900 hover:text-white hover:bg-indigo-600 cursor-pointer select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+      <div
+        *ngIf="showCollection"
+        class="absolute w-full h-auto block top-1/2 left-0 bg-gray-100"
+      >
+        <ul
+          class="absolute z-10 mt-5 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+          tabindex="-1"
+          role="listbox"
+          aria-labelledby="listbox-label"
+          aria-activedescendant="listbox-option-3"
+        >
+          <div
+            *ngIf="
+              nftCollectionModels && nftCollectionModels.length > 0;
+              else noCollectionModel
+            "
+          >
+            <li
+              (mousedown)="refreshSelectedModel(nftCollection.name)"
+              *ngFor="let nftCollection of nftCollectionModelsFiltered | async"
+              [value]="nftCollection.name"
+              class="group text-gray-900 hover:text-white hover:bg-indigo-600 cursor-pointer select-none relative py-2 pl-3 pr-9"
+              id="listbox-option-0"
+              role="option"
+            >
               <div class="flex items-center">
-                <img src="{{nftCollection.image}}" alt="" class="flex-shrink-0 h-6 w-6 rounded-full">
-                <span [ngClass]="nftCollection.name === selectedNftCollectionModel.value ? 'font-semibold' : 'font-normal'" class="ml-3 block truncate">{{nftCollection.name}}</span>
+                <img
+                  src="{{ nftCollection.image }}"
+                  alt=""
+                  class="flex-shrink-0 h-6 w-6 rounded-full"
+                />
+                <span
+                  [ngClass]="
+                    nftCollection.name === selectedNftCollectionModel.value
+                      ? 'font-semibold'
+                      : 'font-normal'
+                  "
+                  class="ml-3 block truncate"
+                  >{{ nftCollection.name }}</span
+                >
               </div>
-      
-              <span *ngIf="nftCollection.name === selectedNftCollectionModel.value" class=" group-hover:text-white text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
-                <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+
+              <span
+                *ngIf="nftCollection.name === selectedNftCollectionModel.value"
+                class="group-hover:text-white text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4"
+              >
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  />
                 </svg>
               </span>
             </li>
           </div>
           <ng-template #noCollectionModel>
-            <li class="group text-gray-900 hover:text-white hover:bg-indigo-600 select-none relative py-2 pl-3 pr-9" id="listbox-option-0" role="option">
+            <li
+              class="group text-gray-900 hover:text-white hover:bg-indigo-600 select-none relative py-2 pl-3 pr-9"
+              id="listbox-option-0"
+              role="option"
+            >
               <div class="flex items-center">
-                <span class="font-normal w-full ml-3 block truncate text-center">No NFT collection for this Blockchain</span>
+                <span class="font-normal w-full ml-3 block truncate text-center"
+                  >No NFT collection for this Blockchain</span
+                >
               </div>
             </li>
           </ng-template>
@@ -34,27 +96,60 @@
     </div>
   </div>
 
-  <div class="container mx-auto mt-4 px-4" infiniteScroll [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
-    <ul *ngIf="nftCollection && nftCollection.result" role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center">
+  <!-- Test -->
+  <div>
+    <button (click)="test()">click me</button>
+  </div>
+
+  <div
+    class="container mx-auto mt-4 px-4"
+    infiniteScroll
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+  >
+    <ul
+      *ngIf="nftCollection && nftCollection.result"
+      role="list"
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center"
+    >
       <li *ngFor="let nft of nftCollection.result" class="inline-flex">
-        <div class="col-span-1 flex flex-col w-full md:mx-auto text-center rounded-lg shadow border-4 border-indigo-600 p-4 relative bg-gray-800">
+        <div
+          class="col-span-1 flex flex-col w-full md:mx-auto text-center rounded-lg shadow border-4 border-indigo-600 p-4 relative bg-gray-800"
+        >
           <div class="h-56">
-            <img class="w-4/6 h-auto flex-shrink-0 mx-auto rounded-full" [defaultImage]="'assets/icons/puff.svg'" [lazyLoad]="(nft | nftFetchImage | async) || ''">
+            <img
+              class="w-4/6 h-auto flex-shrink-0 mx-auto rounded-full"
+              [defaultImage]="'assets/icons/puff.svg'"
+              [lazyLoad]="(nft | nftFetchImage | async) || ''"
+            />
           </div>
           <div *ngIf="nft | nftFetchAttributes | async as attributes">
             <!-- Separator -->
-            <div *ngIf="attributes && attributes.length > 0" class="h-0.5 w-auto bg-gray-400"></div>
+            <div
+              *ngIf="attributes && attributes.length > 0"
+              class="h-0.5 w-auto bg-gray-400"
+            ></div>
             <div class="my-3 pt-4 grid grid-cols-2">
-              <div *ngFor="let attribute of attributes" class="pl-4 text-center mb-4">
-                <p class="text-gray-300 font-bold">{{attribute.trait_type}}</p>
-                <p class="text-gray-200">{{attribute.value}}</p>
+              <div
+                *ngFor="let attribute of attributes"
+                class="pl-4 text-center mb-4"
+              >
+                <p class="text-gray-300 font-bold">
+                  {{ attribute.trait_type }}
+                </p>
+                <p class="text-gray-200">{{ attribute.value }}</p>
               </div>
             </div>
             <!-- Separator -->
-            <div *ngIf="attributes && attributes.length > 0" class="h-0.5 w-auto bg-gray-400"></div>
+            <div
+              *ngIf="attributes && attributes.length > 0"
+              class="h-0.5 w-auto bg-gray-400"
+            ></div>
           </div>
           <div class="mt-auto">
-            <h3 class="my-4 text-gray-300 text-lg font-bold">#{{nft.token_id}}</h3>
+            <h3 class="my-4 text-gray-300 text-lg font-bold">
+              #{{ nft.token_id }}
+            </h3>
           </div>
         </div>
       </li>
