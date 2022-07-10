@@ -11,6 +11,8 @@ export class Web3Provider {
   public chainChangedObservable: Subject<string> = new Subject();
   public accountChangedObservable: Subject<string | null> = new Subject();
 
+  // TODO get role for user
+
   init(): Promise<boolean> {
     return Moralis.start({
       serverUrl: environment.moralis.serverUrl,

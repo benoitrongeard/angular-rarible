@@ -12,6 +12,8 @@ import { LogoChainPipe } from './pipes/logo-chain.pipe';
 import { NftFetchAttributesPipe, NftFetchImagePipe } from './pipes/nft.pipe';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { ExploreNftPageComponent } from './screens/explore-nft-page/explore-nft-page.component';
+import { AdminPageComponent } from './screens/admin-page/admin-page.component';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     LogoChainPipe,
     NftFetchImagePipe,
     NftFetchAttributesPipe,
+    ExploreNftPageComponent,
+    AdminPageComponent,
   ],
   imports: [
     BrowserModule,

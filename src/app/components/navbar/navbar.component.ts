@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   constructor(private web3: Web3Provider, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    console.log('ng on init NAV BAR');
     this.init();
   }
 
