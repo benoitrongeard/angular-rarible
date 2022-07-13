@@ -80,27 +80,48 @@
           <div class="flex items-center space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a
-              href="#"
-              class="h-100 bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium"
+              href="/"
+              ngClass="{{
+                router.url === ''
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }}"
+              class="h-100 px-3 py-2 rounded-md text-sm font-medium"
               aria-current="page"
               >Explore</a
             >
 
             <a
               href="#"
-              class="h-100 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              ngClass="{{
+                router.url === 'X'
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }}"
+              class="h-100 px-3 py-2 rounded-md text-sm font-medium"
               >Your collection</a
             >
 
             <a
               href="#"
-              class="h-100 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              ngClass="{{
+                router.url === 'X'
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }}"
+              class="h-100 px-3 py-2 rounded-md text-sm font-medium"
               >Your transactions</a
             >
             <!-- Admin page -->
             <a
+              *ngIf="web3.isUserAdmin()"
+              ngClass="{{
+                router.url === '/admin'
+                  ? 'bg-gray-900 text-white'
+                  : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+              }}"
               [routerLink]="['/admin']"
-              class="h-100 text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+              class="h-100 px-3 py-2 rounded-md text-sm font-medium"
               >Administrate</a
             >
           </div>

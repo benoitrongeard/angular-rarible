@@ -11,6 +11,8 @@ export class Web3Provider {
   public chainChangedObservable: Subject<string> = new Subject();
   public accountChangedObservable: Subject<string | null> = new Subject();
 
+  private isAdmin = false;
+
   // TODO get role for user
 
   init(): Promise<boolean> {
@@ -22,9 +24,11 @@ export class Web3Provider {
         console.debug('Moralis is initialized');
         try {
           await this.initWeb3();
+          await this.initRoles();
           this.initEvents();
           return true;
         } catch (error) {
+          console.error('Moralis is not correctly initialized');
           return false;
         }
       })
@@ -48,6 +52,10 @@ export class Web3Provider {
         console.error(err);
         return false;
       });
+  }
+
+  async initRoles() {
+    this.isAdmin = await Moralis.Cloud.run('isAdmin');
   }
 
   initEvents() {
@@ -96,5 +104,9 @@ export class Web3Provider {
         console.error(error);
         return false;
       });
+  }
+
+  isUserAdmin() {
+    return this.isAdmin;
   }
 }

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import Moralis from 'moralis';
 import { Subscription } from 'rxjs';
@@ -20,7 +21,11 @@ export class NavbarComponent implements OnInit {
   public userNativeChainInfo: ChainData | undefined;
   public userNativeTokenValue: string | null = null;
 
-  constructor(private web3: Web3Provider, private cdRef: ChangeDetectorRef) {}
+  constructor(
+    public web3: Web3Provider,
+    private cdRef: ChangeDetectorRef,
+    public router: Router
+  ) {}
 
   ngOnInit(): void {
     console.log('ng on init NAV BAR');
